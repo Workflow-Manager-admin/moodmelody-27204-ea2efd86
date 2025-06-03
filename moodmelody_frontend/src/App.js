@@ -1,36 +1,60 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
+
+// Placeholder for MainContainer (user-facing)
+function MainContainer() {
+  return (
+    <div className="container main-content">
+      <div className="hero">
+        <div className="subtitle">Mood-based Music Recommendation</div>
+        <h1 className="title">MoodMelody</h1>
+        <div className="description">
+          Select your mood, pick your language, and let the music match your vibe.
+        </div>
+        <button className="btn btn-large">Get Started</button>
+      </div>
+    </div>
+  );
+}
+
+// Placeholder for AdminDashboard
+function AdminDashboard() {
+  return (
+    <div className="container admin-dashboard">
+      <h2 className="title">Admin Dashboard</h2>
+      <p className="description">
+        Manage mood-language-song mapping and view analytics here. (WIP)
+      </p>
+    </div>
+  );
+}
 
 function App() {
   return (
-    <div className="app">
-      <nav className="navbar">
-        <div className="container">
-          <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+    <Router>
+      <div className="app">
+        <nav className="navbar">
+          <div className="container navbar-content">
             <div className="logo">
-              <span className="logo-symbol">*</span> KAVIA AI
+              <span className="logo-symbol">♪</span> MoodMelody
             </div>
-            <button className="btn">Template Button</button>
+            <div className="nav-links">
+              <a href="/" className="btn btn-nav">Home</a>
+              <a href="/admin" className="btn btn-nav">Admin</a>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
 
-      <main>
-        <div className="container">
-          <div className="hero">
-            <div className="subtitle">AI Workflow Manager Template</div>
-            
-            <h1 className="title">moodmelody_frontend</h1>
-            
-            <div className="description">
-              Start building your application.
-            </div>
-            
-            <button className="btn btn-large">Button</button>
-          </div>
-        </div>
-      </main>
-    </div>
+        <main>
+          <Routes>
+            <Route path="/" element={<MainContainer />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </main>
+      </div>
+    </Router>
   );
 }
 
