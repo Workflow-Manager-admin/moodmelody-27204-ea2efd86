@@ -2,22 +2,23 @@ import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 
-// MainContainer - user homepage (already implemented as dedicated container; import it if available)
 import MainContainer from "./containers/MainContainer";
 import AdminLogin from "./components/AdminLogin";
 import AdminDashboard from "./containers/AdminDashboard";
 
-// Lightweight in-memory admin auth for demo (not persisted)
+// PUBLIC_INTERFACE
 function App() {
+  /**
+   * Main application component.
+   * Enforces react-router-dom v6 direct imports and API usage.
+   */
   const [isAdmin, setIsAdmin] = useState(false);
 
-  // Route protection wrapper
+  // Route guard for admin dashboard
   function ProtectedRoute({ children }) {
-    // Only allow access if logged in admin
+    // Only allow access if logged in as admin
     return isAdmin ? children : <Navigate to="/admin-login" replace />;
   }
-
-  // If you want to preserve intended path after login, use useLocation etc.
 
   return (
     <BrowserRouter>
@@ -37,8 +38,6 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<MainContainer />} />
-
-            {/* Admin route (protected) */}
             <Route
               path="/admin"
               element={
@@ -49,20 +48,15 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
-            {/* Admin login page */}
             <Route
               path="/admin-login"
               element={
                 <div className="container main-content">
                   <AdminLogin onLogin={setIsAdmin} isLoggedIn={isAdmin} />
-                  {/* If logged in, redirect to dashboard */}
                   {isAdmin ? <Navigate to="/admin" replace /> : null}
                 </div>
               }
             />
-
-            {/* Any other routes redirect to home */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
