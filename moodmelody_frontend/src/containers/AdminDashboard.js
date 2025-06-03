@@ -29,7 +29,6 @@ function AnalyticsPie({ data }) {
         const end = cumulative + val;
         cumulative = end;
         const largeArc = val > 0.5 ? 1 : 0;
-        const angle = 2 * Math.PI * (end - start);
         // Circumference 2πr with r=15, center=(19,19)
         const getCoord = (t) => [
           19 + 15 * Math.cos(2 * Math.PI * t - Math.PI / 2),
@@ -63,7 +62,7 @@ function AdminDashboard() {
    * - Shows mock analytics pie chart (state only, no backend)
    */
   const [mappings, setMappings] = useState(MOCK_MAPPINGS);
-  const [editing, setEditing] = useState(null);
+  // Removed unused: const [editing, setEditing] = useState(null);
   const [newEntry, setNewEntry] = useState({ mood: "", language: "", song: "" });
 
   const handleChange = (e, index) => {
