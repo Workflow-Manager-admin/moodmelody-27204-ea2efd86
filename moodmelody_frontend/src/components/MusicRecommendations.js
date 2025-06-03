@@ -842,14 +842,14 @@ function MusicRecommendations({ mood, languages }) {
       <div className="music-grid">
         {(filtered.length > 0 ? filtered : demoTracks).map((track) => (
           <div className="music-card" key={track.id}>
-            <div className="music-cover-wrap">
+            <div className="music-cover-wrap" aria-label="Album art">
               <img
                 src={track.cover}
-                alt={`${track.title} cover art`}
+                alt={`${track.title} album art`}
                 className="music-cover"
                 loading="lazy"
+                style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover' }}
               />
-              {/* Overlay mood badge */}
               {track.mood && (
                 <span className="music-mood-badge">{track.mood}</span>
               )}
@@ -859,7 +859,7 @@ function MusicRecommendations({ mood, languages }) {
               <div className="music-artist">{track.artist}</div>
               <div className="music-language">{track.language}</div>
             </div>
-            <div className="music-player-embed">
+            <div className="music-player-embed" aria-label={`Player for ${track.title}`}>
               {track.type === "spotify" ? (
                 <iframe
                   src={track.embedUrl}
@@ -870,6 +870,8 @@ function MusicRecommendations({ mood, languages }) {
                   allowFullScreen
                   title={`Spotify embed for ${track.title}`}
                   loading="lazy"
+                  aria-label={`Spotify player for ${track.title}`}
+                  style={{ border: 0, minHeight: 80, background: "#f6e2b3"}}
                 />
               ) : track.type === "youtube" ? (
                 <iframe
@@ -881,6 +883,8 @@ function MusicRecommendations({ mood, languages }) {
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   loading="lazy"
+                  aria-label={`YouTube player for ${track.title}`}
+                  style={{ border: 0, minHeight: 80, background: "#f6e2b3"}}
                 ></iframe>
               ) : null}
             </div>
