@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 
 // MainContainer - user homepage (already implemented as dedicated container; import it if available)
@@ -20,7 +20,7 @@ function App() {
   // If you want to preserve intended path after login, use useLocation etc.
 
   return (
-    <Router>
+    <BrowserRouter>
       <div className="app">
         <nav className="navbar">
           <div className="container navbar-content">
