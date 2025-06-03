@@ -7,38 +7,42 @@ const DEFAULT_LANGUAGES = [
 ];
 
 // PUBLIC_INTERFACE
-function LanguageSelector({ availableLanguages = DEFAULT_LANGUAGES, onChange, initialSelection = [] }) {
+function LanguageSelector({
+  availableLanguages = DEFAULT_LANGUAGES,
+  onChange,
+  initialSelection = []
+}) {
   /**
-   * Allows users to multi-select preferred languages from a pastel chip UI.
+   * Allows users to select only one language from a pastel chip UI.
    * Props:
    *  - availableLanguages: array of language strings
-   *  - onChange: callback with updated array of selected languages
-   *  - initialSelection: array of initially selected languages
+   *  - onChange: callback with updated array (length 1 or 0) of selected language(s)
+   *  - initialSelection: array of initially selected language(s), will use only the first one if multiple
    */
-  const [selected, setSelected] = useState(initialSelection);
+  // Keep the logic simple: state is empty string or one language string, exposed as [lang] or []
+  const [selected, setSelected] = useState(
+    Array.isArray(initialSelection) && initialSelection.length > 0 ? initialSelection[0] : ""
+  );
 
-  const toggleLanguage = (lang) => {
-    let next;
-    if (selected.includes(lang)) {
-      next = selected.filter((l) => l !== lang);
-    } else {
-      next = [...selected, lang];
-    }
+  // When user clicks a language: select it if not selected, deselect if already selected
+  const handleLanguageClick = (lang) => {
+    let next = (selected === lang) ? "" : lang;
     setSelected(next);
-    onChange && onChange(next);
+    onChange && onChange(next ? [next] : []);
   };
 
   return (
     <div className="language-selector">
-      <div className="ls-title">Pick your preferred languages</div>
+      <div className="ls-title">Pick your preferred language</div>
       <div className="ls-chips-wrap" aria-label="Language options">
         {availableLanguages.map((lang) => (
           <button
             key={lang}
-            className={`ls-chip${selected.includes(lang) ? " ls-chip--selected" : ""}`}
-            onClick={() => toggleLanguage(lang)}
+            className={`ls-chip${selected === lang ? " ls-chip--selected" : ""}`}
+            onClick={() => handleLanguageClick(lang)}
             type="button"
-            aria-pressed={selected.includes(lang)}
+            aria-pressed={selected === lang}
+            tabIndex={0}
           >
             {lang}
           </button>
