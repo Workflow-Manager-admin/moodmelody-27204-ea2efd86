@@ -62,17 +62,21 @@ function MusicRecommendations({ mood, languages }) {
    * Displays a responsive pastel grid of music recommendations based on mood/languages.
    * Props:
    *   - mood: string, selected mood (can be blank)
-   *   - languages: array of selected language strings (can be blank)
+   *   - languages: array of selected language strings (should be length 0 or 1; only one allowed)
    * For now, uses placeholder demoTracks.
    */
 
-  // For the demo: filter tracks that match mood/language, if set
+  // Only allow one language selection (enforcement should be done in LanguageSelector, but filter accordingly here)
+  const singleLang = Array.isArray(languages) && languages.length > 0 ? languages[0] : null;
+
+  // Strict filtering: BOTH mood and language must match if set, per subtask requirements
   const filtered = demoTracks.filter((track) => {
+    // If mood is set, match by lowercased, substring (to allow partial/typed input)
     const moodMatch = !mood || track.mood.toLowerCase().includes(mood.toLowerCase());
-    const langMatch =
-      !languages || languages.length === 0
-        ? true
-        : languages.some((lang) => track.language.toLowerCase().includes(lang.toLowerCase()));
+    // If a single language is set, match by lowercased, strict equality (no partial, 1:1 mapping as per instructions)
+    const langMatch = !singleLang
+      ? true
+      : track.language.toLowerCase() === singleLang.toLowerCase();
     return moodMatch && langMatch;
   });
 
