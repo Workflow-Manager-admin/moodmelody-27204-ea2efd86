@@ -15,10 +15,26 @@ import "./MainContainer.css";
  *  - LanguageSelector: chip/multi-language selector
  *  - MusicRecommendations: responsive track grid based on selected mood/lang
  */
+import { useNavigate } from "react-router-dom";
+
 function MainContainer() {
   // State for selected mood and languages
   const [mood, setMood] = useState("");
   const [languages, setLanguages] = useState([]);
+  const navigate = useNavigate();
+
+  // Handler for recommend action
+  const handleRecommend = () => {
+    // Pass state for navigation; fallback for direct links handled on RecommendationsPage
+    navigate("/recommendations", {
+      state: {
+        mood,
+        languages,
+      },
+    });
+  };
+
+  const canRecommend = mood.trim().length > 0 || (languages && languages.length > 0);
 
   return (
     <div className="main-container">
@@ -26,9 +42,17 @@ function MainContainer() {
         <MoodSelector onMoodSelect={setMood} initialMood={mood} />
         <LanguageSelector onChange={setLanguages} initialSelection={languages} />
       </section>
-      <section className="recommendations-section">
-        <MusicRecommendations mood={mood} languages={languages} />
-      </section>
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: 30 }}>
+        <button
+          className="btn btn-large"
+          disabled={!canRecommend}
+          onClick={handleRecommend}
+          style={{ minWidth: 180, fontSize: "1.09rem" }}
+          aria-label="Recommend Songs"
+        >
+          Recommend
+        </button>
+      </div>
     </div>
   );
 }

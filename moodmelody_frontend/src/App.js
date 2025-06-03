@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 
 import MainContainer from "./containers/MainContainer";
+import RecommendationsPage from "./containers/RecommendationsPage";
 import AdminLogin from "./components/AdminLogin";
 import AdminDashboard from "./containers/AdminDashboard";
 
@@ -38,6 +39,10 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<MainContainer />} />
+            <Route
+              path="/recommendations"
+              element={<RecommendationsPage />}
+            />
             <Route
               path="/admin"
               element={
