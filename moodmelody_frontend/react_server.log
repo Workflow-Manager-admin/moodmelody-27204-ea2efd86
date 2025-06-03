@@ -42,3 +42,11 @@ ERROR in ./src/App.js 5:0-84
 Module not found: Error: Can't resolve 'react-router-dom' in '/home/kavia/workspace/code-generation/moodmelody-27204-ea2efd86/moodmelody_frontend/src'
 
 webpack compiled with 1 error
+Compiling...
+Failed to compile.
+
+Module not found: Error: Can't resolve 'react-router-dom' in '/home/kavia/workspace/code-generation/moodmelody-27204-ea2efd86/moodmelody_frontend/src'
+ERROR in ./src/App.js 5:0-84
+Module not found: Error: Can't resolve 'react-router-dom' in '/home/kavia/workspace/code-generation/moodmelody-27204-ea2efd86/moodmelody_frontend/src'
+
+webpack compiled with 1 error
