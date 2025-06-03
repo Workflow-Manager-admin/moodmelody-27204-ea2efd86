@@ -1,0 +1,90 @@
+.mood-selector {
+  background: var(--surface, #fcfcfc);
+  border-radius: 17px;
+  box-shadow: 0 2px 16px #A7C7E722;
+  padding: 1.7rem 1.2rem 1.3rem 1.2rem;
+  max-width: 410px;
+  margin: 0 auto 22px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ms-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--primary, #A7C7E7);
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.5px;
+}
+
+.ms-emoji-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 11px;
+  margin-bottom: 0.7rem;
+  margin-top: 0.2rem;
+  justify-content: center;
+}
+
+.ms-emoji-btn {
+  background: var(--secondary, #F7CAC9);
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 1.7rem;
+  box-shadow: 0 2px 6px #F7CAC944;
+  transition: background 0.18s, transform 0.14s;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+}
+
+.ms-emoji-btn--selected,
+.ms-emoji-btn:focus {
+  background: var(--primary, #A7C7E7);
+  box-shadow: 0 3px 9px #A7C7E777;
+  transform: scale(1.09);
+}
+
+.ms-or-label {
+  font-size: 1em;
+  color: var(--text-secondary, #444c);
+  margin: 0.7rem 0 0.23rem 0;
+}
+
+.ms-input {
+  width: 96%;
+  font-size: 1.03em;
+  padding: 13px 14px;
+  border: 1.7px solid var(--primary, #A7C7E7);
+  background: var(--accent, #F6E2B3);
+  border-radius: 14px;
+  box-shadow: 0 1px 6px #F6E2B380;
+  outline: none;
+  color: var(--text-color, #232929);
+  margin-bottom: 0;
+  transition: border 0.16s;
+}
+
+.ms-input:focus {
+  border: 2px solid var(--secondary, #F7CAC9);
+  background: #fffde8;
+}
+
+@media (max-width: 520px) {
+  .mood-selector {
+    max-width: 99vw;
+    padding: 1.1rem 0.4rem 0.9rem 0.4rem;
+  }
+  .ms-emoji-btn {
+    width: 39px;
+    height: 39px;
+    font-size: 1.3rem;
+  }
+  .ms-input {
+    font-size: 0.98em;
+    padding: 10px 10px;
+  }
+}
