@@ -1,36 +1,24 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import './App.css';
 
-// Placeholder for MainContainer (user-facing)
-function MainContainer() {
-  return (
-    <div className="container main-content">
-      <div className="hero">
-        <div className="subtitle">Mood-based Music Recommendation</div>
-        <h1 className="title">MoodMelody</h1>
-        <div className="description">
-          Select your mood, pick your language, and let the music match your vibe.
-        </div>
-        <button className="btn btn-large">Get Started</button>
-      </div>
-    </div>
-  );
-}
+// MainContainer - user homepage (already implemented as dedicated container; import it if available)
+import MainContainer from "./containers/MainContainer";
+import AdminLogin from "./components/AdminLogin";
+import AdminDashboard from "./containers/AdminDashboard";
 
-// Placeholder for AdminDashboard
-function AdminDashboard() {
-  return (
-    <div className="container admin-dashboard">
-      <h2 className="title">Admin Dashboard</h2>
-      <p className="description">
-        Manage mood-language-song mapping and view analytics here. (WIP)
-      </p>
-    </div>
-  );
-}
-
+// Lightweight in-memory admin auth for demo (not persisted)
 function App() {
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  // Route protection wrapper
+  function ProtectedRoute({ children }) {
+    // Only allow access if logged in admin
+    return isAdmin ? children : <Navigate to="/admin-login" replace />;
+  }
+
+  // If you want to preserve intended path after login, use useLocation etc.
+
   return (
     <Router>
       <div className="app">
@@ -49,7 +37,32 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<MainContainer />} />
-            <Route path="/admin" element={<AdminDashboard />} />
+
+            {/* Admin route (protected) */}
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <div className="container">
+                    <AdminDashboard />
+                  </div>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Admin login page */}
+            <Route
+              path="/admin-login"
+              element={
+                <div className="container main-content">
+                  <AdminLogin onLogin={setIsAdmin} isLoggedIn={isAdmin} />
+                  {/* If logged in, redirect to dashboard */}
+                  {isAdmin ? <Navigate to="/admin" replace /> : null}
+                </div>
+              }
+            />
+
+            {/* Any other routes redirect to home */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
