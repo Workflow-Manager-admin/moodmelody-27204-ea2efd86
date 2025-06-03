@@ -10,6 +10,7 @@
   align-items: center;
 }
 
+/* Title: reflect single selection intent */
 .ls-title {
   font-size: 1.20rem;
   color: var(--primary, #A7C7E7);
